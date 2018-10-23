@@ -1,19 +1,23 @@
 import React from "react";
 import Popover from "./Popover";
-import BoardNameForm from "./BoardNameForm"
+import BoardNameForm from "./BoardNameForm";
 
 class KanbanBoard extends React.Component {
   state = {
     name: "Untitled board",
     popoverVisible: false
   };
-
   handleButtonClick = () => {
     this.setState({
       popoverVisible: !this.state.popoverVisible
     });
   };
-
+  handleUpdateName = newName => {
+    this.setState({
+      name: newName,
+      popoverVisible: false
+    });
+  };
   render() {
     const { name, popoverVisible } = this.state;
 
@@ -29,7 +33,11 @@ class KanbanBoard extends React.Component {
           </button>
           {popoverVisible ? (
             <Popover>
-              <BoardNameForm name={name} />
+              <BoardNameForm
+                name={name}
+                updateName={this.handleUpdateName}
+                closeForm={this.handleButtonClick}
+              />
             </Popover>
           ) : null}
         </div>

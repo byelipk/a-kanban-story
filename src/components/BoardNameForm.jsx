@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 class BoardNameForm extends React.Component {
   state = {
@@ -11,7 +12,20 @@ class BoardNameForm extends React.Component {
   };
   handleFormSubmit = e => {
     e.preventDefault();
-    alert("Submit");
+    this.props.updateName(this.state.name);
+  };
+  componentDidMount() {
+    this.focusInput();
+  }
+  focusInput = () => {
+    requestAnimationFrame(() => {
+      if (this.inputRef) {
+        this.inputRef.focus();
+      }
+    });
+  };
+  setInputRef = input => {
+    this.inputRef = input;
   };
   render() {
     const { name } = this.state;
@@ -20,7 +34,11 @@ class BoardNameForm extends React.Component {
       <div className="popover-container">
         <div className="popover-header">
           <span>Rename Board</span>
-          <button type="button" className="popover-header-close-btn">
+          <button
+            type="button"
+            className="popover-header-close-btn"
+            onClick={this.props.closeForm}
+          >
             <span>x</span>
           </button>
         </div>
@@ -28,6 +46,7 @@ class BoardNameForm extends React.Component {
           <label className="d-flex flex-column popover-form__label">
             Name
             <input
+              ref={this.setInputRef}
               type="text"
               name="name"
               className="popover-form__input"
@@ -36,7 +55,11 @@ class BoardNameForm extends React.Component {
               autoComplete="off"
             />
           </label>
-          <input type="submit" value="Rename" className="popover-form__submit-btn" />
+          <input
+            type="submit"
+            value="Rename"
+            className="popover-form__submit-btn"
+          />
         </form>
       </div>
     );
@@ -45,6 +68,12 @@ class BoardNameForm extends React.Component {
 
 BoardNameForm.defaultProps = {
   name: ""
+};
+
+BoardNameForm.propTypes = {
+  name: PropTypes.string.isRequired,
+  updateName: PropTypes.func.isRequired,
+  closeForm: PropTypes.func.isRequired
 };
 
 export default BoardNameForm;
