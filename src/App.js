@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Header from "./components/Header"
 import HeaderBanner from './components/HeaderBanner'
+import KanbanBoard from './components/KanbanBoard'
 
 class App extends Component {
   render() { 
@@ -11,6 +12,7 @@ class App extends Component {
         <HeaderBanner />
 
         {/* Your kanban board goes here */}
+        <KanbanBoard />
       </div>
     )
   }
